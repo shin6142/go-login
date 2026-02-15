@@ -12,12 +12,32 @@
 ```
 03_session_auth/
 ├── README.md
-├── cookies.txt              # curlで使うCookie保存ファイル
 ├── 01_cookie_demo/          # Phase 2-1
-│   └── cookie_demo.go
+│   ├── cookie_demo.go
+│   └── cookies.txt          # curlで生成されるCookie保存ファイル
 └── 02_session_server/       # Phase 2-2
-    └── session_server.go
+    ├── session_server.go
+    └── cookies.txt          # curlで生成されるCookie保存ファイル
 ```
+
+### cookies.txt とは？
+
+curlコマンドで **ブラウザのCookie保存領域を模擬** するためのファイル。
+
+| curlオプション | 意味 | ブラウザでの動作 |
+|----------------|------|-----------------|
+| `-c cookies.txt` | Cookieを保存 | Set-Cookieを受け取り保存 |
+| `-b cookies.txt` | Cookieを送信 | リクエスト時に自動でCookie送信 |
+
+```bash
+# ログイン → サーバーがSet-Cookieを返す → cookies.txtに保存
+curl -c ./cookies.txt -X POST http://localhost:3000/login -d '...'
+
+# 次のリクエスト → cookies.txtからCookieを読み取り送信
+curl -b ./cookies.txt http://localhost:3000/profile
+```
+
+**注意**: cookies.txtは `.gitignore` に含まれているため、Gitには追跡されない。
 
 ---
 

@@ -46,7 +46,7 @@ func main() {
 	fmt.Println("=== Cookie デモサーバー ===")
 	fmt.Println("http://localhost:3000 で起動中...")
 	fmt.Println()
-	fmt.Println("使い方 (03_session_auth ディレクトリから実行):")
+	fmt.Println("使い方 (01_cookie_demo ディレクトリから実行):")
 	fmt.Println("  1. curl -c ./cookies.txt http://localhost:3000/set  # Cookieを保存")
 	fmt.Println("  2. curl -b ./cookies.txt http://localhost:3000/get  # Cookieを送信")
 	fmt.Println("  3. curl -b ./cookies.txt -c ./cookies.txt http://localhost:3000/delete  # Cookie削除")

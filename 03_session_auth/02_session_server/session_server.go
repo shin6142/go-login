@@ -71,6 +71,18 @@ func NewSessionStore() *SessionStore {
 	return &SessionStore{sessions: make(map[string]*Session)}
 }
 
+// ログ出力用
+func (s *SessionStore) String() string {
+	if len(s.sessions) == 0 {
+		return "セッションなし"
+	}
+	result := fmt.Sprintf("セッション数: %d\n", len(s.sessions))
+	for id, session := range s.sessions {
+		result += fmt.Sprintf("  - ID: %s... / User: %s\n", id[:16], session.Username)
+	}
+	return result
+}
+
 // セッションIDを生成（32バイトのランダムな文字列）
 func generateSessionID() (string, error) {
 	b := make([]byte, 32)
@@ -160,6 +172,7 @@ func (s *Server) HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("ユーザー登録: %s", req.Username)
+	log.Printf("セッション: %s", s.sessions)
 	jsonResponse(w, http.StatusCreated, Response{true, "登録しました"})
 }
 
@@ -267,7 +280,7 @@ func main() {
 	fmt.Println("=== セッション認証サーバー ===")
 	fmt.Println("http://localhost:3000 で起動中...")
 	fmt.Println()
-	fmt.Println("使い方 (03_session_auth ディレクトリから実行):")
+	fmt.Println("使い方 (02_session_server ディレクトリから実行):")
 	fmt.Println("  1. curl -X POST http://localhost:3000/register -d '{\"username\":\"testuser\",\"password\":\"secret123\"}'")
 	fmt.Println("  2. curl -c ./cookies.txt -X POST http://localhost:3000/login -d '{\"username\":\"testuser\",\"password\":\"secret123\"}'")
 	fmt.Println("  3. curl -b ./cookies.txt http://localhost:3000/profile")
