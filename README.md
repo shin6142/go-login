@@ -10,7 +10,8 @@
 
 - [x] Phase 1: 基礎
 - [x] Phase 2: セッション認証
-- [ ] Phase 3: JWT認証
+- [x] Phase 3-1, 3-2: JWT認証
+- [ ] Phase 3-3: ブラウザのストレージ管理
 - [ ] Phase 4: 実践（DB連携、セキュリティ強化）
 
 ---
@@ -30,9 +31,13 @@ go-login/
 │   ├── 01_cookie_demo/      # Cookieの仕組み
 │   └── 02_session_server/   # セッション管理サーバー
 │
-├── 04_jwt_auth/             # Phase 3: JWT認証（予定）
+├── 04_jwt_auth/             # Phase 3-1, 3-2: JWT認証
+│   ├── 01_jwt_demo/         # JWTの構造理解
+│   └── 02_jwt_server/       # JWT認証サーバー
 │
-└── 05_with_db/              # Phase 4: DB連携（予定）
+├── 05_browser_storage/      # Phase 3-3: ブラウザストレージ（予定）
+│
+└── 06_with_db/              # Phase 4: DB連携（予定）
 ```
 
 ---
@@ -55,6 +60,24 @@ go-login/
 | HttpOnly | JSからアクセス不可にしてXSS攻撃を防ぐ |
 | セッション | サーバー側でユーザー状態を管理。セッションIDをCookieで送る |
 | crypto/rand | セキュリティ用の乱数生成。math/randは予測可能なので危険 |
+
+### Phase 3: JWT認証
+
+| トピック | 学んだこと |
+|----------|-----------|
+| JWT構造 | Header.Payload.Signature の3部構成 |
+| 署名 | HMAC-SHA256で改ざん検出。秘密鍵がないと正しい署名を作れない |
+| Base64URL | URLで安全に使える文字だけを使うエンコード |
+| ステートレス | サーバーはセッションを保存しない。トークン自体に情報がある |
+
+### Phase 3-3: ブラウザストレージ（予定）
+
+| トピック | 学ぶ予定 |
+|----------|---------|
+| Cookie vs localStorage vs sessionStorage | それぞれの特性と使い分け |
+| タブ間のデータ共有 | なぜ複数タブでログイン状態が維持されるか |
+| storageイベント | ログアウト時に全タブに反映する仕組み |
+| JWTの再発行 | プロファイル変更後にトークンを更新する必要性 |
 
 ---
 
